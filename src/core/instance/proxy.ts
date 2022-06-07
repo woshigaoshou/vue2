@@ -82,12 +82,13 @@ if (__DEV__) {
   }
 
   initProxy = function initProxy(vm) {
+    // 判断是否支持Proxy
     if (hasProxy) {
       // determine which proxy handler to use
       const options = vm.$options
       const handlers =
         options.render && options.render._withStripped ? getHandler : hasHandler
-      vm._renderProxy = new Proxy(vm, handlers)
+      vm._renderProxy = new Proxy(vm, handlers) // Proxy的作用？？？
     } else {
       vm._renderProxy = vm
     }

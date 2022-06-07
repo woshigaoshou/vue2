@@ -18,13 +18,16 @@ const idToTemplate = cached(id => {
 })
 
 const mount = Vue.prototype.$mount
+// 由于runtime-only版本没有下面对template处理的逻辑，所以需要重新定义
 Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
 ): Component {
+  // 获取DOM对象
   el = el && query(el)
 
   /* istanbul ignore if */
+  // 不允许传入body或document，因为会替换掉该DOM元素
   if (el === document.body || el === document.documentElement) {
     __DEV__ &&
       warn(
@@ -88,6 +91,7 @@ Vue.prototype.$mount = function (
       }
     }
   }
+  // 调用之前缓存的方法
   return mount.call(this, el, hydrating)
 }
 

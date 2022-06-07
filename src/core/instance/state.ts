@@ -40,6 +40,7 @@ const sharedPropertyDefinition = {
 }
 
 export function proxy(target: Object, sourceKey: string, key: string) {
+  // 访问this.message时，实际访问的是this._data.message
   sharedPropertyDefinition.get = function proxyGetter() {
     return this[sourceKey][key]
   }

@@ -220,11 +220,12 @@ export function mountComponent(
 
   // manually mounted instance, call mounted on self
   // mounted is called for render-created child components in its inserted hook
+  // $vnode为null，为根节点
   if (vm.$vnode == null) {
     const preWatchers = vm._preWatchers
     if (preWatchers) {
       for (let i = 0; i < preWatchers.length; i++) {
-        preWatchers[i].run()
+        preWatchers[i].run() // 调用watch里面的回调，即updateComponent
       }
     }
     vm._isMounted = true

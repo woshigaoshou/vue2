@@ -70,7 +70,7 @@ if (process.env.NODE_ENV !== 'production') {
       const handlers = options.render && options.render._withStripped
         ? getHandler
         : hasHandler
-      vm._renderProxy = new Proxy(vm, handlers)
+      vm._renderProxy = new Proxy(vm, handlers) // Proxy的作用：模板渲染取值，拿实例内的Key时，若不存在则报错或警告
     } else {
       vm._renderProxy = vm
     }

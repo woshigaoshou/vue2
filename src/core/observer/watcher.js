@@ -42,7 +42,7 @@ export default class Watcher {
 
   constructor (
     vm: Component,
-    expOrFn: string | Function,
+    expOrFn: string | Function,   // mountComponent时，传入的cb是updateComponent
     cb: Function,
     options?: ?Object,
     isRenderWatcher?: boolean
@@ -100,7 +100,7 @@ export default class Watcher {
     let value
     const vm = this.vm
     try {
-      value = this.getter.call(vm, vm)
+      value = this.getter.call(vm, vm)  // 调用expOrFn
     } catch (e) {
       if (this.user) {
         handleError(e, vm, `getter for watcher "${this.expression}"`)

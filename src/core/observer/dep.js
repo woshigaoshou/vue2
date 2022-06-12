@@ -48,6 +48,8 @@ export default class Dep {
 Dep.target = null
 const targetStack = []
 
+// 将当前的target放入栈，之后再恢复状态
+// ...todo：why do it???
 export function pushTarget (_target: Watcher) {
   if (Dep.target) targetStack.push(Dep.target)
   Dep.target = _target

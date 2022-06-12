@@ -34,11 +34,13 @@ extend(Vue.options.components, platformComponents)
 Vue.prototype.__patch__ = inBrowser ? patch : noop
 
 // public mount method
+// 原挂载在原型的$mount方法，因为runtime版本不需要重载的逻辑
 Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
 ): Component {
   el = el && inBrowser ? query(el) : undefined
+  // 真正挂载组件
   return mountComponent(this, el, hydrating)
 }
 

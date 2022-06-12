@@ -41,6 +41,7 @@ export class Observer {
     this.value = value
     this.dep = new Dep()
     this.vmCount = 0
+    // 给属性添加__ob__属性
     def(value, '__ob__', this)
     if (Array.isArray(value)) {
       const augment = hasProto
@@ -49,6 +50,7 @@ export class Observer {
       augment(value, arrayMethods, arrayKeys)
       this.observeArray(value)
     } else {
+      // 对内部的属性进行依赖收集
       this.walk(value)
     }
   }
@@ -138,7 +140,7 @@ export function defineReactive (
 ) {
   const dep = new Dep()
 
-  const property = Object.getOwnPropertyDescriptor(obj, key)
+  const property = Object.getOwnPropertyDescriptor(obj, key) // 获取属性描述符
   if (property && property.configurable === false) {
     return
   }

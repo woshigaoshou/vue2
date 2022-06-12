@@ -49,6 +49,7 @@ export function initState (vm: Component) {
   vm._watchers = []
   vm._inlineComputed = null
   const opts = vm.$options
+  // 初始化State的顺序：props -> methods -> data -> computed -> watch
   if (opts.props) initProps(vm, opts.props)
   if (opts.methods) initMethods(vm, opts.methods)
   if (opts.data) {
@@ -110,6 +111,7 @@ function initProps (vm: Component, propsOptions: Object) {
 
 function initData (vm: Component) {
   let data = vm.$options.data
+  // data为函数，调用方法获取
   data = vm._data = typeof data === 'function'
     ? getData(data, vm)
     : data || {}
@@ -126,6 +128,8 @@ function initData (vm: Component) {
   const props = vm.$options.props
   const methods = vm.$options.methods
   let i = keys.length
+  // 逐个判断key是否在methods，是则报警告
+  // 逐个判断key是否在props，是则报警告，并不再对data中的该key进行代理proxy
   while (i--) {
     const key = keys[i]
     if (process.env.NODE_ENV !== 'production') {
@@ -147,6 +151,7 @@ function initData (vm: Component) {
     }
   }
   // observe data
+  // 对整个data进行observe
   observe(data, true /* asRootData */)
 }
 
